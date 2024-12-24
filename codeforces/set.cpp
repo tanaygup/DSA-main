@@ -30,6 +30,20 @@ int multiply(int a, int b, int c)
     }
     return ans;
 }
+// int i = 0;
+void helper(int i,bool flag,vector<int>& a){
+
+    if(i==a.size()){
+        return;
+    }
+
+    if(flag){
+        br = helper(i,false,a);
+        nbr = helper(i+1,true,a);
+    }
+    
+}
+
 int main()
 {
     ios::sync_with_stdio(false);
@@ -38,6 +52,16 @@ int main()
     cin >> t;
     while (t--)
     {
+        int n;
+        cin>>n;
+
+        vector<int> a(n);
+
+        for(auto &it: a){
+            cin>>it;
+        }
+
         
+
     }
 }

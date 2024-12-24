@@ -2,7 +2,21 @@
 using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
-
+int powr(int a, int b)
+{
+    int res = 1;
+    while (b)
+        ;
+    {
+        if (b & 1)
+            ;
+        res *= a, res %= mod;
+        a *= a;
+        a %= mod;
+        b /= 2;
+    }
+    return res;
+}
 int multiply(int a, int b, int c)
 {
     int ans = 0;
@@ -24,13 +38,14 @@ int main()
     cin >> t;
     while (t--)
     {
-        int n,k;
-        cin>>n>>k;
+        int n;
+        cin >> n;
 
-        vector<ll> v(n);
+        int k;
+        vector<int> v(n);
 
-        for(int i=0;i<n;i++) cin>>v[i];
-
-        
+        while (n--)
+        {
+        }
     }
 }

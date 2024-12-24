@@ -1,101 +1,97 @@
-#include <iostream>
-using namespace std;
+/*
+    Your Trie object will be instantiated and called as such:
+    Trie* obj = new Trie();
+    obj->insert(word);
+    bool check2 = obj->search(word);
+    bool check3 = obj->startsWith(prefix);
+ */
 
-class TrieNode
+struct Node
 {
-public:
-    char data;
-    TrieNode *children[26];
-    bool isTerminal;
+    Node *links[26];
+    bool flag = false;
 
-    TrieNode(char ch)
+    bool containsChar(char ch)
     {
-        data = ch;
-        for (int i = 0; i < 26; ++i)
-        {
-            children[i] = NULL;
-        }
-        bool isTerminal = false;
+        return links[ch - 'a'];
+    }
+
+    void put(char ch, Node *node)
+    {
+        links[ch - 'a'] = node;
+    }
+
+    Node *get(char ch)
+    {
+        return links[ch - 'a'];
+    }
+
+    void setEnd()
+    {
+        flag = true;
+    }
+
+    bool isEnd()
+    {
+        return flag;
     }
 };
 class Trie
 {
+
+    Node *root;
+
 public:
-    TrieNode *root;
+    /** Initialize your data structure here. */
 
     Trie()
     {
-        root = new TrieNode('\0');
+        root = new Node();
     }
-    void wordUtil(TrieNode *root, string word)
+
+    /** Inserts a word into the trie. */
+    void insert(string word)
     {
-        // base case
-        if (word.length() == 0)
+        int n = word.length();
+        Node *node = root;
+        for (int i = 0; i < n; i++)
         {
-            root->isTerminal = true;
-            return;
+            if (!node->containsChar(word[i]))
+            {
+                node->put(word[i], new Node());
+            }
+            node = node->get(word[i]);
         }
-
-        // assumption- all letters in CAPS
-        int index = word[0] - 'A';
-        TrieNode *child;
-
-        // word is present
-        if (root->children[index] != NULL)
-            child = root->children[index];
-
-        // word is absent
-        else
-        {
-            child = new TrieNode(word[0]);
-            root->children[index] = child;
-        }
-
-        wordUtil(child, word.substr(1));
+        node->setEnd();
     }
 
-    void wordInsert(string word)
-    {
-        wordUtil(root, word);
-    }
-    bool searchUtil(TrieNode *root, string word)
-    {
-        if (word.length() == 0)
-        {
-            return root->isTerminal;
-        }
-        int index = word[0] - 'A';
-        TrieNode *child;
-
-        //   present
-        if (root->children[index] != NULL)
-        {
-            child = root->children[index];
-        }
-        else
-        {
-            return false;
-        }
-        return searchUtil(child,word);
-    }
+    /** Returns if the word is in the trie. */
     bool search(string word)
     {
-        return searchUtil(root, word);
+        Node *node = root;
+        int n = word.length();
+
+        for (int i = 0; i < n; i++)
+        {
+            if (!node->containsChar(word[i]))
+                return false;
+            node = node->get(word[i]);
+        }
+
+        return node->isEnd();
     }
-    bool removeUtil(TrieNode* root,string word){
-          if (word.length() == 0){
-            if(!root->isTerminal) return false;
-          }
-        root->isTerminal=false;
-         
-    }
-    bool remove(string word){
-        removeUtil(root,word);
+
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    bool startsWith(string prefix)
+    {
+        Node *node = root;
+
+        for (int i = 0; i < prefix.length(); i++)
+        {
+            if (!node->containsChar(prefix[i]))
+                return false;
+            node = node->get(prefix[i]);
+        }
+        return true;
     }
 };
-int main()
-{
-    Trie *t = new Trie();
-    t->wordInsert("ABCD");
-    return 0;
-}

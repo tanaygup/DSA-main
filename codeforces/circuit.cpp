@@ -38,6 +38,24 @@ int main()
     cin >> t;
     while (t--)
     {
-        
+        int n;
+        cin >> n;
+
+        vector<int> v(2 * n);
+        int one = 0, zero = 0;
+        for (int i = 0; i < v.size(); i++)
+        {
+            cin >> v[i];
+            if (v[i] == 0)
+                zero++;
+            else
+                one++;
+        }
+        int mini = 0, maxi = 0;
+        // if(zero%2 ==0 && one%2==0) mini = 0;
+        mini = (zero % 2 + one % 2) / 2;
+        maxi = min(zero, one);
+
+        cout << mini << " " << maxi << endl;
     }
 }

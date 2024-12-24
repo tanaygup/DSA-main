@@ -38,6 +38,26 @@ int main()
     cin >> t;
     while (t--)
     {
-        
+        int x, y, k;
+        cin >> x >> y >> k;
+
+        vector<int> first, second;
+
+        int mini = min(x, y);
+
+        first.push_back(0);
+        first.push_back(0);
+        first.push_back(mini);
+        first.push_back(mini);
+
+        second.push_back(0);
+        second.push_back(mini);
+        second.push_back(mini);
+        second.push_back(0);
+
+        for (auto a : first)
+            cout << a << " ";
+        for (auto b : second)
+            cout << b << " ";
     }
 }

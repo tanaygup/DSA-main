@@ -38,6 +38,15 @@ int main()
     cin >> t;
     while (t--)
     {
-        
+        ll n;
+        cin >> n;
+        priority_queue<ll, vector<ll>, greater<ll>> pq;
+
+        vector<ll> a(n);
+        for (int i = 0; i < n; i++)
+        {
+            cin >> a[i];
+            pq.push(a[i]);
+        }
     }
 }
